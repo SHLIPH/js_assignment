@@ -1,0 +1,115 @@
+<html>
+	<head>
+		<style>
+			  .button {
+				margin-left: 10px;
+				display: inline-block;
+				padding: 45px 25px;
+				font-size: 24px;
+				cursor: pointer;
+				text-align: center;
+				text-decoration: none;
+				outline: none;
+				color: #fff;
+				background-color: #1E90FF;
+				border: none;
+				border-radius: 15px;
+				box-shadow: 0 9px #999;
+			  }
+			  .button:hover {background-color: #3e8e41}
+			  .button:active {
+				background-color: #3e8e41;
+				box-shadow: 0 5px #666;
+				transform: translateY(4px);
+			  }
+			  .div {
+				margin-left: 10px;
+				padding: 25px 32px;
+				font-size: 24px;
+				text-align: center;
+				color: #fff;
+				background-color: #1E90FF;
+				border-style: solid;
+				border-color: #4bacf2;
+				border-width: 7px;
+			  }
+		</style>
+		<script>
+
+			var timeLeft = 0;
+			var id = 0;
+			var sec = 0;
+			function start() {
+				sec = parseInt(document.getElementById("sec").value);
+				timeLeft = sec;
+				if(isNaN(timeLeft)) {
+					alert("須為數字");
+					return false;
+				}
+				if(timeLeft == ""){
+					alert("需填入秒數");
+					return false;
+				}
+				document.getElementById("timer").innerHTML = timeLeft;
+				id = setInterval(countDownTimer,1000);
+			}
+
+			var state = true;
+			function toggleLight() {
+				var pic = document.getElementById("pic");
+				state = !state;
+				pic.src = state ? "img/on.jpg" : "img/off.jpg";
+				clearInterval(id);
+				if(state){
+					document.getElementById("timer").innerHTML = sec;
+					timeLeft = sec;
+					id = setInterval(countDownTimer,1000);
+				}
+				else{
+					document.getElementById("timer").innerHTML = 0;
+				}
+
+			}
+
+			function countDownTimer() {
+				timeLeft = timeLeft - 1;
+				document.getElementById("timer").innerHTML = timeLeft;
+				if (timeLeft <= 0){
+					state = false;
+					document.getElementById("pic").src = "img/off.jpg";
+					clearInterval(id);
+				}
+			}
+
+		</script>
+	</head>
+	<body>
+		<table style="margin:0px auto;padding: 10px;border:2px solid;border-color:#1E90FF">
+		  <tbody>
+		  <tr>
+			<td>
+				<input type="text" id="sec">
+			</td>
+			<td>
+				<button id="start" onclick="start()">開始</button>
+			</td>
+		  </tr>
+		  <tr>
+		  <td rowspan="2">
+			<!--- 照片 -->
+			<img id="pic" src="img/on.jpg" width="400" height="300">
+		  </td>
+		  <td>
+			<!--- 倒數計時器 -->
+			<div class="div" id="timer"></div>
+		  </td>
+		  </tr>
+		  <tr>
+		  <td>
+			<!--- 開關燈按鈕 -->
+			<button class="button" onclick="toggleLight();">ON<br>-<br>OFF</button></td>
+		  </tr>
+		  </tbody>
+		</table>
+	</body>
+</html>
